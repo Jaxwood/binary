@@ -5,9 +5,9 @@ curl -s https://raw.githubusercontent.com/sindresorhus/binary-extensions/master/
 extensions=($(find . -type f | egrep -i -E -o '\w*$' | sort -su))
 
 # check tracked files
-if [ -f .gitattributes ]
+if [ -f repo/.gitattributes ]
 then
-  cut -d ' ' -f1 .gitattributes | sed 's/^\*\.//g' > tracked
+  cut -d ' ' -f1 repo/.gitattributes | sed 's/^\*\.//g' > tracked
 else
   touch tracked
 fi
