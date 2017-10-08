@@ -1,24 +1,18 @@
 #!/bin/bash
 
-# download binary extensions
-curl -s https://raw.githubusercontent.com/sindresorhus/binary-extensions/master/binary-extensions.json | sed 's/[],,",\,\t\[]//g' > binaries
-extensions=($(find . -type f | egrep -i -E -o '\w*$' | sort -su))
-
-# check tracked files
+# get tracked files
 if [[ -f repo/.gitattributes ]]; then
   cut -d ' ' -f1 repo/.gitattributes | sed 's/^\*\.//g' > tracked
 else
   touch tracked
 fi
 
-file=binaries
-lfs=tracked
 # loop all extensions
-for i in ${extensions[@]}; do
-  if grep -Fxq $i "$lfs"; then
+for i in $(find . -type f | egrep -i -E -o '\w*$' | sort -su); do
+  if grep -Fxq $i tracked; then
     continue
   fi
-  if grep -Fxq $i "$file"; then
+  if grep -Fxq $i binaries; then
     error=1
     echo $i 1>&2
   fi
