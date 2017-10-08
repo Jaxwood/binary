@@ -6,4 +6,6 @@ RUN mkdir -p /app/repo
 RUN curl -s https://raw.githubusercontent.com/sindresorhus/binary-extensions/master/binary-extensions.json | sed 's/[],,",\,\t\[]//g' > /app/binaries
 
 COPY . /app
+RUN chmod +x /app/run.sh
+
 WORKDIR /app
